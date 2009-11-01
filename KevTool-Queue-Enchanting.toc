@@ -1,0 +1,9 @@
+## Interface: 30200
+## Title: KevTool Queue (Enchanting)
+## Version: 1.01
+## Author: Kevin Marquette
+## Notes: Tool that auto queue's things to craft
+## Dependencies: Altoholic, Skillet
+## SavedVariablesPerCharacter: KTQuseBonusQueue, KTQBonusQueue, KTQskipSingles, KTQuseThreshold, KTQThreshold, KTQuseFallback
+KevTool Queue.lua
+KevTool Queue.xml

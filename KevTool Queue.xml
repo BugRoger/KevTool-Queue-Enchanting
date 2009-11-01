@@ -1,0 +1,27 @@
+<Ui xmlns="http://www.blizzard.com/wow/ui/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.blizzard.com/wow/ui/">
+
+  <!-- Here the Scripts that have to be Executed -->
+  <Frame name="KevToolQueue_GeneralScripts" hidden="true">
+  <Scripts>     <OnLoad> KevToolQueue_OnLoad() </OnLoad></Scripts>
+  </Frame>  
+  
+  <Frame name="KevToolQueue" hidden="true" virtual="true" parent="UIParent">
+
+    <Size> 
+      <AbsDimension x="200" y="200"/> 
+    </Size> 
+
+    <Anchors> 
+      <Anchor point="CENTER" /> 
+    </Anchors> 
+
+    <Layers> 
+      <Layer level="BACKGROUND"> 
+        <Texture name="$parent_Background" setAllPoints="true">
+                     
+          <Color r="0" g="0" b="1" a="0.5" /> 
+        </Texture> 
+      </Layer> 
+    </Layers> 
+  </Frame>  
+</Ui>
