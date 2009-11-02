@@ -1,6 +1,5 @@
 local frame = CreateFrame("FRAME", "KevToolQueueFrame");
 
-
 function KevToolQueue_OnLoad()
   --math.randomseed();
 	
@@ -129,7 +128,7 @@ function KTQSlashCommandHandler(msg)
 end
 
 function KTQQueue(msg)
-	local queueString0,queueString1,queueString2,queueString3,queueString4  = strsplit(" ",msg)
+	local queueString0,queueString1,queueString2,queueString3,queueString4,queueString5,q6,q7   = strsplit(" ",msg)
 	if queueString0 == "QUEUE" then
 		if queueString1 ~= nil then
 			stackSize = tonumber(queueString1)
@@ -139,9 +138,15 @@ function KTQQueue(msg)
 				elseif queueString2 == "EPICGEMS" then
 					KTQQueueItem(stackSize, "EpicGems")
 				elseif queueString2 == "RAREGEMS" then
-					KTQQueueItem(stackSize, "RareGems")
+					KTQQueueItem(stackSize, "RareGems")		
 				else
-					if queueString4 ~= nil then
+				    if q7 ~= nil then 
+						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5.." "..q6.." "..q7))
+				    elseif q6 ~= nil then 
+						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5.." "..q6))
+				    elseif queueString5 ~= nil then 
+						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5))
+					elseif queueString4 ~= nil then
 						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4))
 					elseif queueString3 ~= nil then
 						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3))
@@ -177,6 +182,30 @@ function KTQShowHelp()
 	print("  /ktq queue 5 Glyphs")
 end
 	
+-- Extracts the numeric item id from an item link
+function GetItemIDFromLink(link)
+	if (link) then
+		local found, _, string = string.find(link, "^|c%x+|H(.+)|h%[.+%]")
+	
+		if found then
+			local _, id = strsplit(":", string)
+		
+			if id then id = tonumber(id) end
+		
+			
+			if EnchantIDToScrollID[id] then				
+				scrollId = EnchantIDToScrollID[id]
+				DEFAULT_CHAT_FRAME:AddMessage("Found Enchant with id "..id.." converting to scroll with id "..scrollId)
+				id = scrollId
+			end
+
+			return id;
+		else
+			return nil
+		end
+	end
+end
+
 	
 function KTQQueueItem(stackSize, group)
 local totalQueue = 0
@@ -187,11 +216,13 @@ for i = 1, GetNumTradeSkills() do
   local skillName, skillType, numAvailable, isExpanded, altVerb = GetTradeSkillInfo(i)
   
   if KTQIsMatch(skillName, group) == true then
-    local count = Altoholic:GetItemCount(Skillet:GetItemIDFromLink(itemLink))
+	local id = GetItemIDFromLink(itemLink)
+    local count = Altoholic:GetItemCount(id)
     if count < stackSize then
 		local enchantLink = GetTradeSkillRecipeLink(i)
 		local found, _, skillString = string.find(enchantLink, "^|%x+|H(.+)|h%[.+%]")
 		local _, skillId = strsplit(":", skillString )
+
 		local toQueue = stackSize - count
 		if KTQuseBonusQueue == true and toQueue == stackSize then
 			toQueue = toQueue + KTQBonusQueue
@@ -229,9 +260,9 @@ DEFAULT_CHAT_FRAME:AddMessage("Items Skipped: "..totalSkipped)
 end
 
 function KTQIsMatch(skillName, group)
-
 	if skillName == nil then return false end
 
+	
 	-- Glyphs
 	if string.find(skillName,"Glyph of") ~= nil and group == "Glyphs" then
 		return true
@@ -276,7 +307,7 @@ function KTQIsMatch(skillName, group)
 	if string.find(skillName,"Twilight Opal") ~= nil and group == "RareGems" then
 		return true
 	end
-
+	
 	-- Everything else
 	if string.find(skillName:upper(),group:upper()) ~= nil then
 		return true
@@ -359,3 +390,4 @@ function KTQConvertTextToCopper(text)
 	
 	return copper
 end
+

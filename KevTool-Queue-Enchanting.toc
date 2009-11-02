@@ -7,3 +7,4 @@
 ## SavedVariablesPerCharacter: KTQuseBonusQueue, KTQBonusQueue, KTQskipSingles, KTQuseThreshold, KTQThreshold, KTQuseFallback
 KevTool Queue.lua
 KevTool Queue.xml
+KevToolScrollMap.lua
