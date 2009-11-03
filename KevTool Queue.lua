@@ -128,7 +128,7 @@ function KTQSlashCommandHandler(msg)
 end
 
 function KTQQueue(msg)
-	local queueString0,queueString1,queueString2,queueString3,queueString4,queueString5,q6,q7   = strsplit(" ",msg)
+	local queueString0,queueString1,queueString2   = strsplit(" ",msg, 3)
 	if queueString0 == "QUEUE" then
 		if queueString1 ~= nil then
 			stackSize = tonumber(queueString1)
@@ -140,23 +140,9 @@ function KTQQueue(msg)
 				elseif queueString2 == "RAREGEMS" then
 					KTQQueueItem(stackSize, "RareGems")		
 				else
-				    if q7 ~= nil then 
-						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5.." "..q6.." "..q7))
-				    elseif q6 ~= nil then 
-						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5.." "..q6))
-				    elseif queueString5 ~= nil then 
-						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4.." "..queueString5))
-					elseif queueString4 ~= nil then
-						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3.." "..queueString4))
-					elseif queueString3 ~= nil then
-						KTQQueueItem(stackSize, strtrim(queueString2.." "..queueString3))
-					else
-						KTQQueueItem(stackSize, strtrim(queueString2))
-					end
-					
+					KTQQueueItem(stackSize, strtrim(queueString2))
 				end					
-			end
-			
+			end			
 		end
 	end
 end 
